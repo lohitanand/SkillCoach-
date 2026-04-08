@@ -217,13 +217,13 @@ curl http://localhost:7860/state
 
 ## Baseline Scores
 
-Scores from running `python inference.py` with `gpt-4o-mini`:
+Scores from running python inference.py with Qwen/Qwen2.5-72B-Instruct:
 
 | Task                  | Difficulty | Score  |
 |-----------------------|------------|--------|
-| `identify-error`      | Easy       | 0.95   |
-| `hint-without-answer` | Medium     | 0.82   |
-| `guided-debugging`    | Hard       | 0.71   |
+| `identify-error`      | Easy       | 1.000   |
+| `hint-without-answer` | Medium     | 0.000   |
+| `guided-debugging`    | Hard       | 1.000   |
 
 *Run `python inference.py` and fill in the table from the `[END]` lines.*
 
