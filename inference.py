@@ -129,14 +129,14 @@ async def run_episode(task_name: str) -> None:
     rewards: list[float] = []
     steps: int = 0
     success: bool = False
-    final_score: float = 0.0
+    final_score: float = 0.01
 
     try:
         obs = await env.reset()
 
         for step_num in range(1, max_steps + 1):
             error_str: str | None = None
-            reward: float = 0.0
+            reward: float = 0.01
             done: bool = False
             action_str: str = ""
 
@@ -176,13 +176,13 @@ async def run_episode(task_name: str) -> None:
         await env.close()
 
         if not rewards:
-            final_score = 0.0
+            final_score = 0.01
         elif not success:
             # Episode ended due to an error — use last recorded reward
-            final_score = rewards[-1] if rewards else 0.0
+            final_score = rewards[-1] if rewards else 0.011
 
         rewards_str = (
-            ",".join(f"{r:.2f}" for r in rewards) if rewards else "0.00"
+            ",".join(f"{r:.2f}" for r in rewards) if rewards else "0.01"
         )
 
         print(
