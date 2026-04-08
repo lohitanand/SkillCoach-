@@ -525,16 +525,19 @@ def grade_response(
 
     if task_name == "identify-error":
         result = _grade_identify_error(scenario, response)
+        result.score = max(0.01, min(0.99, result.score))
         task_state.per_turn_rewards.append(result.score)
         return result
 
     if task_name == "hint-without-answer":
         result = _grade_hint_without_answer(scenario, response)
+        result.score = max(0.01, min(0.99, result.score))
         task_state.per_turn_rewards.append(result.score)
         return result
 
     if task_name == "guided-debugging":
         per_turn_reward, too_direct, kw_found = _grade_guided_turn(scenario, response)
+        per_turn_reward = max(0.01, min(0.99, per_turn_reward))
         task_state.per_turn_rewards.append(per_turn_reward)
 
         # Check if student's next message indicates they found the answer
@@ -544,9 +547,9 @@ def grade_response(
 
         if episode_done:
             rewards = task_state.per_turn_rewards
-            mean_reward = sum(rewards) / len(rewards) if rewards else 0.0
+            mean_reward = sum(rewards) / len(rewards) if rewards else 0.01
             completion_bonus = 0.3 if task_state.student_found_answer else 0.0
-            final_score = max(0.0, min(1.0, mean_reward + completion_bonus))
+            final_score = max(0.01, min(0.99, mean_reward + completion_bonus))
 
             parts = [f"Mean per-turn reward: {mean_reward:.2f}."]
             if task_state.student_found_answer:
